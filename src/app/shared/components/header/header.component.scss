@@ -1,0 +1,24 @@
+.app-header {
+  .brand {
+    left: 0;
+    transition: all 0.25s ease;
+    position: relative;
+
+    &.expanded {
+      left: 215px;
+    }
+
+    .mat-icon {
+      top: 5px;
+      position: relative;
+    }
+
+    .app-title {
+      padding-left: 10px;
+    }
+  }
+
+  .space {
+    flex: 1 1 auto;
+  }
+}

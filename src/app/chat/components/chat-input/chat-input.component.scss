@@ -1,0 +1,15 @@
+.chat-input {
+  position: fixed;
+  bottom: 15px;
+  width: 70%;
+
+  .field {
+    width: 80%;
+  }
+
+  .submit {
+    float: right;
+    right: 10px;
+    top: 10px;
+  }
+}
