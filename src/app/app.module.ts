@@ -10,6 +10,7 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 // Feature modules
 import { MaterialModule } from './material.module';
 import { AuthModule } from './auth/auth.module';
+import { RoomsModule } from './rooms/rooms.module';
 
 // Containers
 import { AppComponent } from './app.component';
@@ -66,7 +67,8 @@ export function jwtOptionsFactory() {
     RouterModule.forRoot(ROUTES),
     BrowserAnimationsModule,
     AuthModule,
-    MaterialModule
+    MaterialModule,
+    RoomsModule
   ],
   providers: [
     LoggerService,

@@ -9,6 +9,19 @@
     box-shadow: 6px 0 6px rgba(0, 0, 0, 0.1);
     height: calc(100vh - 64px);
 
+    .link {
+      position: absolute;
+      display: inline-block;
+      right: 14px;
+      color: rgba(0, 0, 0, 0.54);
+      top: 12px;
+
+      &:hover {
+      color: rgba(0, 0, 0, 1);
+        
+      }
+    }
+
     .user-list {
       mat-list-item {
         height: 30px;

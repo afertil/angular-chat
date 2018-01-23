@@ -29,7 +29,8 @@ import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
         fixedTopGap="64">
 
         <mat-list>
-          <h3 mat-subheader>Rooms</h3> <!-- Create a new component -->
+           <!-- Create a new component -->
+          <h3 mat-subheader>Rooms <a class="link" routerLink="rooms/new"><mat-icon>add_circle_outline</mat-icon></a></h3>
           <mat-list-item *ngFor="let room of rooms">
             <mat-icon mat-list-icon>folder</mat-icon>
             <h4 mat-line>{{ room.name }}</h4>
