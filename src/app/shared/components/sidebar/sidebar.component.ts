@@ -5,7 +5,8 @@ import {
   OnDestroy,
   Input,
   ElementRef,
-  ViewChild
+  ViewChild,
+  AfterViewChecked,
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +14,10 @@ import { Observable } from 'rxjs/Observable';
 import { User, AuthService } from '../../../auth/shared/services/auth.service';
 import { Store } from '../../../../store';
 import { UsersService } from '../services/users.service';
-import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
+import {
+  Room,
+  RoomsService,
+} from './../../../rooms/shared/services/rooms.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,16 +35,18 @@ import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
         <mat-list>
            <!-- Create a new component -->
           <h3 mat-subheader>Rooms <a class="link" routerLink="rooms/new"><mat-icon>add_circle_outline</mat-icon></a></h3>
-          <mat-list-item *ngFor="let room of rooms">
-            <mat-icon mat-list-icon>folder</mat-icon>
-            <h4 mat-line>{{ room.name }}</h4>
-          </mat-list-item>
+          <div class="room-list" *ngIf="rooms | async">
+            <mat-list-item *ngFor="let room of rooms | async" [routerLink]="['../rooms', room._id]">
+              <mat-icon mat-list-icon>folder</mat-icon>
+              <p mat-line>{{ room.name }}</p>
+            </mat-list-item>
+          </div>
 
           <mat-divider></mat-divider>
 
           <h3 mat-subheader>Direct messages</h3> <!-- Create a new component -->
           <div class="user-list" *ngIf="users | async">
-            <mat-list-item *ngFor="let user of users | async" (click)="goToRoom(user)">
+            <mat-list-item *ngFor="let user of users | async" [routerLink]="['../rooms', user._id]">
               <mat-icon *ngIf="user.connected" style="color:green" mat-list-icon>radio_button_checked</mat-icon>
               <mat-icon *ngIf="!user.connected" mat-list-icon>radio_button_unchecked</mat-icon>
               <p mat-line>{{ user.username }}</p>
@@ -58,11 +64,11 @@ import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
       </mat-sidenav-content>
 
     </mat-sidenav-container>
-  `
+  `,
 })
 export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
-  rooms: any[];
   users: Observable<User[]>;
+  rooms: Observable<Room[]>;
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -74,8 +80,9 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
     private changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private authService: AuthService,
-    private userService: UsersService,
-    private store: Store
+    private usersService: UsersService,
+    private roomsService: RoomsService,
+    private store: Store,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -83,9 +90,15 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(users => {
+    this.usersService.getUsers().subscribe(users => {
       this.store.set('users', users);
       this.users = this.store.select<User[]>('users');
+    });
+
+    this.roomsService.getRooms().subscribe(rooms => {
+      console.log(rooms);
+      this.store.set('rooms', rooms);
+      this.rooms = this.store.select<Room[]>('rooms');
     });
   }
 

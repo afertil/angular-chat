@@ -17,16 +17,22 @@
       top: 12px;
 
       &:hover {
-      color: rgba(0, 0, 0, 1);
-        
+        color: rgba(0, 0, 0, 1);
       }
     }
 
+    .room-list,
     .user-list {
+      margin-bottom: 15px;
+
       mat-list-item {
         height: 30px;
         font-size: 14px;
         cursor: pointer;
+
+        &:hover {
+          background-color: rgba(128, 128, 128, 0.5);
+        }
       }
       mat-icon {
         font-size: 18px;

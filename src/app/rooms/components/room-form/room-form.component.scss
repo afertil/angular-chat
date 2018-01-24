@@ -10,4 +10,14 @@
     font-size: 16px;
     margin-bottom: 15px;
   }
+
+  .name,
+  .description {
+    width: 100%;
+  }
+
+  .mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

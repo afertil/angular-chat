@@ -23,18 +23,20 @@ export const ROUTES: Routes = [
       {
         path: ':id',
         component: RoomComponent,
-        resolve: { room: RoomComponent }
-      }
-    ]
-  }
+        resolve: { room: RoomComponent },
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(ROUTES), MaterialModule],
-  declarations: [
-    RoomComponent,
-    RoomFormComponent
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(ROUTES),
+    MaterialModule,
   ],
-  providers: [RoomsService, RoomResolver]
+  declarations: [RoomComponent, RoomFormComponent],
+  providers: [RoomsService, RoomResolver],
 })
 export class RoomsModule {}

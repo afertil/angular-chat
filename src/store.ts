@@ -5,17 +5,20 @@ import 'rxjs/add/operator/pluck';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 import { User } from './app/auth/shared/services/auth.service';
+import { Room } from './app/rooms/shared/services/rooms.service';
 
 export interface State {
   user: User;
   messages: String[];
   users: User[];
+  rooms: Room[];
 }
 
 const state: State = {
   user: undefined,
   messages: undefined,
-  users: undefined
+  users: undefined,
+  rooms: undefined,
 };
 
 export class Store {
