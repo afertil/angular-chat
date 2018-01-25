@@ -33,12 +33,12 @@ import { environment } from '../environments/environment';
 
 // Routes
 export const ROUTES: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'chat' },
+  { path: '', pathMatch: 'full', redirectTo: 'messages' },
   {
-    path: 'chat',
+    path: 'messages',
     canActivate: [AuthGuard],
-    loadChildren: './chat/chat.module#ChatModule'
-  }
+    loadChildren: './chat/chat.module#ChatModule',
+  },
 ];
 
 export function jwtOptionsFactory() {
@@ -46,7 +46,7 @@ export function jwtOptionsFactory() {
     tokenGetter: () => {
       return localStorage.getItem('access_token');
     },
-    whitelistedDomains: ['localhost:3000']
+    whitelistedDomains: ['localhost:3000'],
   };
 }
 
@@ -55,20 +55,20 @@ export function jwtOptionsFactory() {
   imports: [
     BrowserModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {
-      enabled: environment.production
+      enabled: environment.production,
     }),
     HttpClientModule,
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory
-      }
+        useFactory: jwtOptionsFactory,
+      },
     }),
     RouterModule.forRoot(ROUTES),
     BrowserAnimationsModule,
     AuthModule,
     MaterialModule,
-    RoomsModule
+    RoomsModule,
   ],
   providers: [
     LoggerService,
@@ -78,9 +78,9 @@ export function jwtOptionsFactory() {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -7,8 +7,7 @@ import { MaterialModule } from './../material.module';
 
 // Services
 import { ChatService } from './shared/services/chat.service';
-// import { ArticlesResolver } from './shared/resolvers/articles-resolver.service';
-// import { ArticleResolver } from './shared/resolvers/article-resolver.service';
+// import { MessagesResolver } from './shared/resolvers/messages-resolver.service';
 
 // components
 import { ChatInputComponent } from './components/chat-input/chat-input.component';
@@ -20,10 +19,10 @@ import { ChatComponent } from './containers/chat/chat.component';
 
 export const ROUTES: Routes = [
   {
-    path: '',
-    component: ChatComponent
-    // resolve: { articles: ArticlesResolver }
-  }
+    path: ':roomId',
+    component: ChatComponent,
+    // resolve: { messages: MessagesResolver }
+  },
 ];
 
 @NgModule({
@@ -32,8 +31,8 @@ export const ROUTES: Routes = [
     ChatComponent,
     ChatListComponent,
     ChatItemComponent,
-    ChatInputComponent
+    ChatInputComponent,
   ],
-  providers: [ChatService /* ArticlesResolver, ArticleResolver */]
+  providers: [ChatService /* MessagesResolver */],
 })
 export class ChatModule {}

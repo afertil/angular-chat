@@ -30,7 +30,8 @@
         font-size: 14px;
         cursor: pointer;
 
-        &:hover {
+        &:hover,
+        &.active {
           background-color: rgba(128, 128, 128, 0.5);
         }
       }

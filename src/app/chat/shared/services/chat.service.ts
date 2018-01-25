@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { WebsocketService } from '../../../shared/websocket/websocket.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -11,13 +12,15 @@ import { User } from '../../../auth/shared/services/auth.service';
 export class ChatService {
   messages: Subject<any>;
   users: Observable<User[]>;
+  roomId: string;
 
   // Our constructor calls our wsService connect method
   constructor(private wsService: WebsocketService, private store: Store) {
     this.users = this.store.select<User[]>('users');
+    this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
 
     this.messages = <Subject<any>>this.wsService
-      .connect()
+      .connect(this.roomId)
       .map((response: any): any => {
         this.store.set('messages', response);
         return response;
