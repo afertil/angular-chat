@@ -33,19 +33,21 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Unsubscribe before changing room
     this.router.events.subscribe( (event: Event) => {
       if (event instanceof NavigationStart) {
-        console.log('navigationstart');
-        this.unsubscribe();
+        this.subscription.unsubscribe();
       }
     });
   }
 
   ngOnDestroy() {
-    this.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   subscribe() {
     this.messages = [];
     this.user = this.store.select<User>('user');
+    if (this.subscription) {
+      this.chatService.initConnexion();
+    }
     // this.messages = this.store.select<String[]>('messages');
     this.subscription = this.chatService.messagesSubject.subscribe(message => {
       this.messages = [...this.messages, message];
@@ -56,11 +58,5 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.user.subscribe(user => {
       this.chatService.send({ message, user });
     });
-  }
-
-  unsubscribe() {
-    console.log('unsubscribe');
-    this.subscription.unsubscribe();
-    this.chatService.leaveRoom();
   }
 }

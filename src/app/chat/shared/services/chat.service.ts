@@ -17,17 +17,7 @@ export class ChatService {
 
   // Our constructor calls our wsService connect method
   constructor(private wsService: WebsocketService, private store: Store) {
-    this.users = this.store.select<User[]>('users');
-    this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
-
-    this.messagesSubject = <Subject<any>>this.wsService
-      .connect(this.roomId)
-      .map((response: any): any => {
-        // this.store.set('messages', response);
-
-        this.messages = [...this.messages, response];
-        return response;
-      });
+    this.initConnexion();
 
     // Handle user connection
     // this.wsService.socket.on('userConnected', user => {
@@ -41,14 +31,23 @@ export class ChatService {
     // });
   }
 
+  initConnexion() {
+    this.users = this.store.select<User[]>('users');
+    this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
+
+    this.messagesSubject = <Subject<any>>this.wsService
+      .connect(this.roomId)
+      .map((response: any): any => {
+        // this.store.set('messages', response);
+
+        this.messages = [...this.messages, response];
+        return response;
+      });
+  }
+
   // Our simplified interface for sending
   // messages back to our socket.io server
   send(message) {
     this.messagesSubject.next(message);
-  }
-
-  leaveRoom() {
-    console.log( this.wsService.socket);
-    this.wsService.socket.emit('leave');
   }
 }

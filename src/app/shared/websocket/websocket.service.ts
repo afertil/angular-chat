@@ -53,10 +53,4 @@ export class WebsocketService {
   // join(roomId: string) {
   //   this.socket.emit('room/join', roomId);
   // }
-
-  leave(roomId: string) {
-    console.log(roomId);
-    console.log(this.socket);
-    this.socket.emit('leave', roomId);
-  }
 }
