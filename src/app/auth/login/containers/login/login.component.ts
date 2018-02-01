@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../../shared/services/auth.service';
 import { LoggerService } from '../../../../shared/logger/logger.service';
+import { APP_CONFIG } from '../../../../../config';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +44,7 @@ export class LoginComponent {
       res => {
         this.authService.storeData(res);
         this.loggerService.success('Successfully connected');
-        this.router.navigate(['chat']);
+        this.router.navigate([`/messages/${ APP_CONFIG.defaultRoom}`]);
       },
       error => this.loggerService.error(error.error.message)
     );

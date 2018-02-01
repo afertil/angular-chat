@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './containers/login/login.component';
 
 export const ROUTES: Routes = [
-  { path: '', component: LoginComponent }
+  { path: '', component: LoginComponent, outlet:'login' }
 ];
 
 @NgModule({

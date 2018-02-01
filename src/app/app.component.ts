@@ -17,9 +17,9 @@ import { UsersService } from './shared/components/services/users.service';
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
   template: `
-    <div class="mat-typography">
+    <div class="mat-typography" 
+      *ngIf="user$ | async">
       <app-header
-        *ngIf="user$ | async"
         [user$]="user$"
         (logout)="onLogout()"
         (toggledSidenav)="onToggledSidenav($event)">
@@ -30,6 +30,7 @@ import { UsersService } from './shared/components/services/users.service';
         [toggle]="toggledSidenav">
       </app-sidebar>
     </div>
+    <router-outlet name="login"></router-outlet>
   `
 })
 export class AppComponent implements OnInit {
