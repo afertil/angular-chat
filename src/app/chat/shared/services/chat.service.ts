@@ -10,7 +10,8 @@ import { User } from '../../../auth/shared/services/auth.service';
 
 @Injectable()
 export class ChatService {
-  messages: Subject<any>;
+  messages: any[] = []; // Message interface
+  messagesSubject: Subject<any>;
   users: Observable<User[]>;
   roomId: string;
 
@@ -19,28 +20,35 @@ export class ChatService {
     this.users = this.store.select<User[]>('users');
     this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
 
-    this.messages = <Subject<any>>this.wsService
+    this.messagesSubject = <Subject<any>>this.wsService
       .connect(this.roomId)
       .map((response: any): any => {
-        this.store.set('messages', response);
+        // this.store.set('messages', response);
+
+        this.messages = [...this.messages, response];
         return response;
       });
 
     // Handle user connection
-    this.wsService.socket.on('userConnected', user => {
-      this.users.subscribe(results => {
-        results.map(data => {
-          if (data.id === user.id) {
-            data.connected = true;
-          }
-        });
-      });
-    });
+    // this.wsService.socket.on('userConnected', user => {
+    //   this.users.subscribe(results => {
+    //     results.map(data => {
+    //       if (data.id === user.id) {
+    //         data.connected = true;
+    //       }
+    //     });
+    //   });
+    // });
   }
 
   // Our simplified interface for sending
   // messages back to our socket.io server
   send(message) {
-    this.messages.next(message);
+    this.messagesSubject.next(message);
+  }
+
+  leaveRoom() {
+    console.log( this.wsService.socket);
+    this.wsService.socket.emit('leave');
   }
 }

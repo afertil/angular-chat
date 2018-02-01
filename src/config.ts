@@ -1,4 +1,4 @@
-const host = 'http://localhost:3001';
+const host = 'http://localhost:3000';
 
 export const APP_CONFIG = {
   api: `${host}/api`,

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router, Event } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -22,28 +23,44 @@ export class ChatComponent implements OnInit, OnDestroy {
   messages: any[]; // TODO: create type message
   subscription: Subscription;
 
-  constructor(private chatService: ChatService, private store: Store) {}
+  constructor(private route: ActivatedRoute, private router: Router, private chatService: ChatService, private store: Store) {}
 
   ngOnInit() {
-    this.messages = [];
-    this.user = this.store.select<User>('user');
-    // this.messages = this.store.select<String[]>('messages');
-    this.subscription = this.chatService.messages.subscribe(msg => {
-      console.log('messages', msg);
-      this.messages.push(msg);
-      console.log(this.messages);
+    this.route.params.subscribe(
+      params => this.subscribe()
+    );
+
+    // Unsubscribe before changing room
+    this.router.events.subscribe( (event: Event) => {
+      if (event instanceof NavigationStart) {
+        console.log('navigationstart');
+        this.unsubscribe();
+      }
     });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    this.messages = [];
+    this.user = this.store.select<User>('user');
+    // this.messages = this.store.select<String[]>('messages');
+    this.subscription = this.chatService.messagesSubject.subscribe(message => {
+      this.messages = [...this.messages, message];
+    });
   }
 
   sendMessage(message) {
-    console.log(message);
     this.user.subscribe(user => {
       this.chatService.send({ message, user });
-      this.messages.push({ message, user });
     });
+  }
+
+  unsubscribe() {
+    console.log('unsubscribe');
+    this.subscription.unsubscribe();
+    this.chatService.leaveRoom();
   }
 }

@@ -49,4 +49,14 @@ export class WebsocketService {
     // of both an observer and observable.
     return Subject.create(observer, observable);
   }
+
+  // join(roomId: string) {
+  //   this.socket.emit('room/join', roomId);
+  // }
+
+  leave(roomId: string) {
+    console.log(roomId);
+    console.log(this.socket);
+    this.socket.emit('leave', roomId);
+  }
 }
