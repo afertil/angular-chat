@@ -12,7 +12,7 @@ import { APP_CONFIG } from './../../../../config';
 
 export interface User {
   email: string;
-  id: string;
+  _id: string;
   username: string;
   connected: boolean;
 }

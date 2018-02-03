@@ -17,7 +17,7 @@ import { UsersService } from './shared/components/services/users.service';
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
   template: `
-    <div class="mat-typography" 
+    <div class="mat-typography"
       *ngIf="user$ | async">
       <app-header
         [user$]="user$"

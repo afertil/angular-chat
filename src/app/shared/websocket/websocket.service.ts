@@ -20,8 +20,8 @@ export class WebsocketService {
     this.socket = io(APP_CONFIG.ws, {
       query: {
         token: this.authService.getTokens().accessToken,
-        room: roomId,
-      },
+        room: roomId
+      }
     });
 
     // We define our observable which will observe any incoming messages
@@ -42,7 +42,7 @@ export class WebsocketService {
     const observer = {
       next: (data: Object) => {
         this.socket.emit('message', data);
-      },
+      }
     };
 
     // we return our Rx.Subject which is a combination
