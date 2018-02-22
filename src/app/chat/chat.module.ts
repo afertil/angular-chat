@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { MaterialModule } from './../material.module';
 
@@ -26,7 +27,12 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(ROUTES), MaterialModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(ROUTES),
+    MaterialModule,
+    PerfectScrollbarModule,
+  ],
   declarations: [
     ChatComponent,
     ChatListComponent,

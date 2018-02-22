@@ -3,7 +3,7 @@ import {
   ActivatedRoute,
   NavigationStart,
   Router,
-  Event
+  Event,
 } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,7 @@ import { User } from '../../../auth/shared/services/auth.service';
       <app-chat-list [messages]="messages"></app-chat-list>
       <app-chat-input (message)="sendMessage($event)"></app-chat-input>
     </div>
-  `
+  `,
 })
 export class ChatComponent implements OnInit, OnDestroy {
   user: Observable<User>;
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private chatService: ChatService,
-    private store: Store
+    private store: Store,
   ) {}
 
   ngOnInit() {

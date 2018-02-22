@@ -6,6 +6,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 // Feature modules
 import { MaterialModule } from './material.module';
@@ -50,6 +53,10 @@ export function jwtOptionsFactory() {
   };
 }
 
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true,
+};
+
 @NgModule({
   declarations: [AppComponent, HeaderComponent, SidebarComponent],
   imports: [
@@ -66,6 +73,7 @@ export function jwtOptionsFactory() {
     }),
     RouterModule.forRoot(ROUTES),
     BrowserAnimationsModule,
+    PerfectScrollbarModule,
     AuthModule,
     MaterialModule,
     RoomsModule,
@@ -79,6 +87,10 @@ export function jwtOptionsFactory() {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
       multi: true,
+    },
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
   ],
   bootstrap: [AppComponent],

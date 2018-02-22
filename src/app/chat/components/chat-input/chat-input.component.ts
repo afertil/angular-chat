@@ -6,7 +6,7 @@ import {
   EventEmitter,
   OnInit,
   AfterViewInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 @Component({
@@ -26,7 +26,7 @@ import {
 
       <button mat-raised-button color="primary" [disabled]="disabled" class="submit" (click)="send(text.value)">Send</button>
     </div>
-  `
+  `,
 })
 export class ChatInputComponent implements AfterViewInit {
   @ViewChild('text') textRef: ElementRef;
