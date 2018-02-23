@@ -36,7 +36,11 @@ import { environment } from '../environments/environment';
 
 // Routes
 export const ROUTES: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'messages' },
+  // {
+  //   path: '',
+  //   canActivate: [AuthGuard],
+  //   loadChildren: './'
+  // }
   {
     path: 'messages',
     canActivate: [AuthGuard],

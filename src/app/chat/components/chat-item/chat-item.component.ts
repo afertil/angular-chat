@@ -1,19 +1,21 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
+import { User } from './../../../auth/shared/services/auth.service';
+
 @Component({
   selector: 'app-chat-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['chat-item.component.scss'],
   template: `
-    <div class="chat-item">
-      <mat-icon>account_circle</mat-icon>
+    <div class="chat-item" [ngClass]="{'right': user._id === item.user._id}">
+      <mat-icon *ngIf="user._id !== item.user._id">account_circle</mat-icon>
       <mat-chip class="message">{{ item.message }}</mat-chip>
-      <p>{{ item.user.username }}</p>
+      <mat-icon *ngIf="user._id === item.user._id">account_circle</mat-icon>
+      <p class="date">{{ item.date | date:'HH:mm:ss' }}</p>
     </div>
-  `
+  `,
 })
 export class ChatItemComponent {
   @Input() item;
-
-  constructor() {}
+  @Input() user: User;
 }

@@ -1,6 +1,21 @@
+:host {
+  width: 100%;
+  padding: 0 25px;
+}
 .chat-item {
+  &.right {
+    float: right;
+
+    .date {
+      text-align: right;
+    }
+  }
   .message {
     top: -7px;
     position: relative;
+  }
+  .date {
+    font-size: 10px;
+    color: grey;
   }
 }

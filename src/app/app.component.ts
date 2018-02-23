@@ -3,15 +3,16 @@ import {
   OnInit,
   OnDestroy,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { User, AuthService } from './auth/shared/services/auth.service';
 import { LoggerService } from './shared/logger/logger.service';
 import { UsersService } from './shared/components/services/users.service';
+import { APP_CONFIG } from './../config';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,7 @@ import { UsersService } from './shared/components/services/users.service';
       </app-sidebar>
     </div>
     <router-outlet name="login"></router-outlet>
-  `
+  `,
 })
 export class AppComponent implements OnInit {
   user$: Observable<User>;
@@ -41,11 +42,19 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private loggerService: LoggerService,
-    private userService: UsersService
+    private userService: UsersService,
   ) {}
 
   ngOnInit() {
     this.user$ = this.authService.user;
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        if (event.url === '/' || event.url === '/messages') {
+          this.router.navigate([`/messages/${APP_CONFIG.defaultRoom}`]);
+        }
+      }
+    });
   }
 
   onLogout() {

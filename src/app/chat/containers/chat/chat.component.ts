@@ -18,7 +18,7 @@ import { User } from '../../../auth/shared/services/auth.service';
   styleUrls: ['chat.component.scss'],
   template: `
     <div>
-      <app-chat-list [messages]="messages"></app-chat-list>
+      <app-chat-list [messages]="messages" [loading]="loading"></app-chat-list>
       <app-chat-input (message)="sendMessage($event)"></app-chat-input>
     </div>
   `,
@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   user: Observable<User>;
   messages: any[]; // TODO: create type message
   subscription: Subscription;
+  loading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +38,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe(params => this.subscribe());
-
     // Unsubscribe before changing room
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
@@ -51,6 +51,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   subscribe() {
+    this.loading = true;
     this.messages = [];
     this.user = this.store.select<User>('user');
     if (this.subscription) {
@@ -59,6 +60,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     // this.messages = this.store.select<String[]>('messages');
     this.subscription = this.chatService.messagesSubject.subscribe(message => {
       this.messages = [...this.messages, ...message];
+      this.loading = false;
     });
   }
 
