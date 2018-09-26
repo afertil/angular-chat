@@ -12,12 +12,12 @@ import { User } from '../../../auth/shared/services/auth.service';
 
 @Injectable()
 export class UsersResolver implements Resolve<User[]> {
-  constructor(private articlesService: UsersService, private router: Router) {}
+  constructor(private usersService: UsersService, private router: Router) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<User[]> {
-    return this.articlesService.getUsers();
+    return this.usersService.getUsers();
   }
 }

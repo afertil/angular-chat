@@ -5,9 +5,9 @@ import {
 import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { User, AuthService } from './auth/shared/services/auth.service';
-import { LoggerService } from './shared/logger/logger.service';
-import { APP_CONFIG } from './../config';
+import { User, AuthService } from '@app/auth/shared/services/auth.service';
+import { LoggerService } from '@app/shared/logger/logger.service';
+import { APP_CONFIG } from '@config';
 
 @Component({
   selector: 'app-root',

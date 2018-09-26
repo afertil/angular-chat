@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { LoggerService } from './../../../shared/logger/logger.service';
-import { Room, RoomsService } from './../../shared/services/rooms.service';
+import { LoggerService } from '@app/shared/logger/logger.service';
+import { Room, RoomsService } from '@app/rooms/shared/services/rooms.service';
 
 @Component({
   selector: 'app-room',

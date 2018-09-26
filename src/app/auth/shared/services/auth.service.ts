@@ -6,8 +6,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 
 
-import { Store } from '../../../../store';
-import { APP_CONFIG } from './../../../../config';
+import { Store } from '@store';
+import { APP_CONFIG } from '@config';
 
 export interface User {
   email: string;

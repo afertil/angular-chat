@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../../shared/services/auth.service';
-import { LoggerService } from '../../../../shared/logger/logger.service';
-import { APP_CONFIG } from '../../../../../config';
+import { AuthService } from '@app/auth/shared/services/auth.service';
+import { LoggerService } from '@app/shared/logger/logger.service';
+import { APP_CONFIG } from '@config';
 
 @Component({
   selector: 'app-login',

@@ -9,13 +9,13 @@ import {
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 
-import { User, AuthService } from '../../../auth/shared/services/auth.service';
-import { Store } from '../../../../store';
-import { UsersService } from '../services/users.service';
+import { User, AuthService } from '@app/auth/shared/services/auth.service';
+import { Store } from '@store';
+import { UsersService } from '@app/shared/components/services/users.service';
 import {
   Room,
   RoomsService,
-} from './../../../rooms/shared/services/rooms.service';
+} from '@app/rooms/shared/services/rooms.service';
 
 @Component({
   selector: 'app-sidebar',

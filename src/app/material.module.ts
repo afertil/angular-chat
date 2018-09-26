@@ -19,24 +19,26 @@ import {
   MatChipsModule
 } from '@angular/material';
 
+const MODULES = [
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatTableModule,
+  MatProgressSpinnerModule,
+  MatSidenavModule,
+  MatListModule,
+  MatPaginatorModule,
+  MatChipsModule
+];
+
 @NgModule({
-  imports: [CommonModule],
-  exports: [
-    MatButtonModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatTableModule,
-    MatProgressSpinnerModule,
-    MatSidenavModule,
-    MatListModule,
-    MatPaginatorModule,
-    MatChipsModule
-  ]
+  imports: [...MODULES],
+  exports: [...MODULES],
 })
 export class MaterialModule {}

@@ -11,28 +11,28 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 // Feature modules
-import { MaterialModule } from './material.module';
-import { AuthModule } from './auth/auth.module';
-import { RoomsModule } from './rooms/rooms.module';
+import { MaterialModule } from '@app/material.module';
+import { AuthModule } from '@app/auth/auth.module';
+import { RoomsModule } from '@app/rooms/rooms.module';
 
 // Containers
-import { AppComponent } from './app.component';
+import { AppComponent } from '@app/app.component';
 
 // Components
-import { HeaderComponent } from './shared/components/header/header.component';
-import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
+import { HeaderComponent } from '@app/shared/components/header/header.component';
+import { SidebarComponent } from '@app/shared/components/sidebar/sidebar.component';
 
 // Services
-import { LoggerService } from './shared/logger/logger.service';
-import { Store } from '../store';
-import { RequestInterceptor } from './shared/interceptors/request.interceptor';
-import { WebsocketService } from './shared/websocket/websocket.service';
-import { UsersService } from './shared/components/services/users.service';
+import { LoggerService } from '@app/shared/logger/logger.service';
+import { Store } from '@store';
+import { RequestInterceptor } from '@app/shared/interceptors/request.interceptor';
+import { WebsocketService } from '@app/shared/websocket/websocket.service';
+import { UsersService } from '@app/shared/components/services/users.service';
 
 // Guard
-import { AuthGuard } from './auth/shared/guards/auth.guard';
+import { AuthGuard } from '@app/auth/shared/guards/auth.guard';
 
-import { environment } from '../environments/environment';
+import { environment } from '@env/environment';
 
 // Routes
 export const ROUTES: Routes = [

@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable ,  Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { WebsocketService } from '../../../shared/websocket/websocket.service';
-import { Store } from '../../../../store';
-import { User } from '../../../auth/shared/services/auth.service';
+import { WebsocketService } from '@app/shared/websocket/websocket.service';
+import { Store } from '@store';
+import { User } from '@app/auth/shared/services/auth.service';
 
 @Injectable()
 export class ChatService {

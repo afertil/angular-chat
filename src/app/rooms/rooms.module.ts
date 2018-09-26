@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MaterialModule } from './../material.module';
+import { MaterialModule } from '@app/material.module';
 
 // Services
-import { RoomsService } from './shared/services/rooms.service';
-import { RoomResolver } from './shared/resolvers/room-resolver.service';
+import { RoomsService } from '@app/rooms/shared/services/rooms.service';
+import { RoomResolver } from '@app/rooms/shared/resolvers/room-resolver.service';
 
 // components
-import { RoomFormComponent } from './components/room-form/room-form.component';
+import { RoomFormComponent } from '@app/rooms/components/room-form/room-form.component';
 
 // containers
-import { RoomComponent } from './containers/room/room.component';
+import { RoomComponent } from '@app/rooms/containers/room/room.component';
 
 export const ROUTES: Routes = [
   {

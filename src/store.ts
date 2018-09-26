@@ -1,9 +1,9 @@
 
 import {pluck, distinctUntilChanged} from 'rxjs/operators';
-import { Observable ,  BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
-import { User } from './app/auth/shared/services/auth.service';
-import { Room } from './app/rooms/shared/services/rooms.service';
+import { User } from '@app/auth/shared/services/auth.service';
+import { Room } from '@app/rooms/shared/services/rooms.service';
 
 export interface State {
   user: User;

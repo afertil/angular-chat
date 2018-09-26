@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable ,  Subject } from 'rxjs';
 
-import { APP_CONFIG } from '../../../config';
-import { AuthService, User } from '../../auth/shared/services/auth.service';
+import { APP_CONFIG } from '@config';
+import { AuthService, User } from '@app/auth/shared/services/auth.service';
 
 @Injectable()
 export class WebsocketService {

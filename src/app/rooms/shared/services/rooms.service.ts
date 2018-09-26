@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { APP_CONFIG } from '../../../../config';
+import { APP_CONFIG } from '@config';
 
 export interface Room {
   _id: string;

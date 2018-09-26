@@ -16,6 +16,12 @@
       "dom"
     ],
     "module": "es2015",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@env/*": ["./src/environments/*"],
+      "@store": ["./src/store.ts"],
+      "@config": ["./src/config.ts"]
+    }
   }
 }

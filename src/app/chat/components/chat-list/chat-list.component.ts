@@ -5,7 +5,7 @@ import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import {
   User,
   AuthService,
-} from './../../../auth/shared/services/auth.service';
+} from '@app/auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-chat-list',

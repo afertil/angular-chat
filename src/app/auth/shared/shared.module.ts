@@ -2,16 +2,16 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MaterialModule } from './../../material.module';
+import { MaterialModule } from '@app/material.module';
 
 // Components
-import { AuthFormComponent } from './components/auth-form/auth-form.component';
+import { AuthFormComponent } from '@app/auth/shared/components/auth-form/auth-form.component';
 
 // Services
-import { AuthService } from './services/auth.service';
+import { AuthService } from '@app/auth/shared/services/auth.service';
 
 // guards
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from '@app/auth/shared/guards/auth.guard';
 
 @NgModule({
   imports: [

@@ -8,9 +8,9 @@ import {
 
 import { Observable ,  Subscription } from 'rxjs';
 
-import { ChatService } from '../../shared/services/chat.service';
-import { Store } from '../../../../store';
-import { User } from '../../../auth/shared/services/auth.service';
+import { ChatService } from '@app/chat/shared/services/chat.service';
+import { Store } from '@store';
+import { User } from '@app/auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-chat',

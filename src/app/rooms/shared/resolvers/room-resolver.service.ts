@@ -2,7 +2,7 @@ import { Injectable, } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { Room, RoomsService } from '../services/rooms.service';
+import { Room, RoomsService } from '@app/rooms/shared/services/rooms.service';
 
 @Injectable()
 export class RoomResolver implements Resolve<Room> {

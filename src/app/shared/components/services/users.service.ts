@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { APP_CONFIG } from './../../../../config';
-import { User } from '../../../auth/shared/services/auth.service';
+import { APP_CONFIG } from '@config';
+import { User } from '@app/auth/shared/services/auth.service';
 
 @Injectable()
 export class UsersService {

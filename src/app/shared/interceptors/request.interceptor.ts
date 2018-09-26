@@ -5,14 +5,12 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpResponse,
-  HttpErrorResponse
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { AuthService } from '../../auth/shared/services/auth.service';
+import { AuthService } from '@app/auth/shared/services/auth.service';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {

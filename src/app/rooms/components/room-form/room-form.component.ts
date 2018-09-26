@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { Room } from './../../shared/services/rooms.service';
+import { Room } from '@app/rooms/shared/services/rooms.service';
 
 @Component({
   selector: 'app-room-form',

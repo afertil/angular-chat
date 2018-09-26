@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { User } from '../../../auth/shared/services/auth.service';
+import { User } from '@app/auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
