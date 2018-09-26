@@ -38,7 +38,7 @@ export class ChatService {
       .connect(this.roomId).pipe(
       map((response: any): any => {
         // this.store.set('messages', response);
-        this.messages = [...this.messages, ...response];
+        this.messages = [...response];
         console.log(this.messages);
 
         return response;

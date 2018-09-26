@@ -8,6 +8,7 @@ export interface Room {
   _id: string;
   name: string;
   description: string;
+  is_user: boolean;
 }
 
 @Injectable()

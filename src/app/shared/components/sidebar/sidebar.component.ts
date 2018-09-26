@@ -95,6 +95,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.roomsService.getRooms().subscribe(rooms => {
       console.log(rooms);
+      const globalRooms = rooms.filter(room => room.is_user === false);
       this.store.set('rooms', rooms);
       this.rooms = this.store.select<Room[]>('rooms');
     });
