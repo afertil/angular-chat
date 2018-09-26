@@ -6,8 +6,7 @@ import {
   Event,
 } from '@angular/router';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable ,  Subscription } from 'rxjs';
 
 import { ChatService } from '../../shared/services/chat.service';
 import { Store } from '../../../../store';

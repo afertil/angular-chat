@@ -1,17 +1,12 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
 
 import { User, AuthService } from './auth/shared/services/auth.service';
 import { LoggerService } from './shared/logger/logger.service';
-import { UsersService } from './shared/components/services/users.service';
 import { APP_CONFIG } from './../config';
 
 @Component({
@@ -42,7 +37,6 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private loggerService: LoggerService,
-    private userService: UsersService,
   ) {}
 
   ngOnInit() {

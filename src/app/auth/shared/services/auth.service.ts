@@ -3,9 +3,8 @@ import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
-import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs';
+
 
 import { Store } from '../../../../store';
 import { APP_CONFIG } from './../../../../config';

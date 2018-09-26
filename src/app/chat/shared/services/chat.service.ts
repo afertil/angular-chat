@@ -1,10 +1,9 @@
+
 import { Injectable } from '@angular/core';
+import { Observable ,  Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { WebsocketService } from '../../../shared/websocket/websocket.service';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-
 import { Store } from '../../../../store';
 import { User } from '../../../auth/shared/services/auth.service';
 
@@ -36,14 +35,14 @@ export class ChatService {
     this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
 
     this.messagesSubject = <Subject<any>>this.wsService
-      .connect(this.roomId)
-      .map((response: any): any => {
+      .connect(this.roomId).pipe(
+      map((response: any): any => {
         // this.store.set('messages', response);
         this.messages = [...this.messages, ...response];
         console.log(this.messages);
 
         return response;
-      });
+      }));
   }
 
   // Our simplified interface for sending

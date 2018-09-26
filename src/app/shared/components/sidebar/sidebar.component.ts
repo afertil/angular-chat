@@ -4,12 +4,10 @@ import {
   OnInit,
   OnDestroy,
   Input,
-  ElementRef,
-  ViewChild,
   AfterViewChecked,
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { User, AuthService } from '../../../auth/shared/services/auth.service';
 import { Store } from '../../../../store';

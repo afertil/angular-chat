@@ -1,3 +1,4 @@
+
 import { Injectable, Injector } from '@angular/core';
 import {
   HttpEvent,
@@ -8,9 +9,8 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+import { mergeMap, catchError } from 'rxjs/operators';
 
 import { AuthService } from '../../auth/shared/services/auth.service';
 
@@ -36,7 +36,7 @@ export class RequestInterceptor implements HttpInterceptor {
         this.isRefreshing = true;
         return this.authService
           .refreshToken(tokens.refreshToken)
-          .mergeMap(res => {
+          .pipe(mergeMap(res => {
             this.authService.storeData(res);
             this.isRefreshing = false;
             req = req.clone({
@@ -46,13 +46,13 @@ export class RequestInterceptor implements HttpInterceptor {
             });
 
             return next.handle(req);
-          })
-          .catch(error => {
+          }),
+          catchError(error => {
             this.authService.logoutUser();
             this.router.navigate(['/auth/login']);
 
-            return Observable.throw(error.error.message);
-          });
+            return observableThrowError(error.error.message);
+          }));
       }
     }
 
