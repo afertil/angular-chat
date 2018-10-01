@@ -4,5 +4,5 @@ export const APP_CONFIG = {
   api: `${host}/api`,
   ws: 'ws://localhost:1080/rooms',
   images: `${host}/images`,
-  defaultRoom: '5a6880f13958bb1b433c11c2'
+  defaultRoom: '5bb20cb625faaf6d9f2e37a5'
 };
