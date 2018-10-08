@@ -1,7 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Observable ,  Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { WebsocketService } from '@app/shared/websocket/websocket.service';
 import { Store } from '@store';
@@ -9,45 +8,46 @@ import { User } from '@app/auth/shared/services/auth.service';
 
 @Injectable()
 export class ChatService {
-  messages: any[] = []; // Message interface
-  messagesSubject: Subject<any>;
   users: Observable<User[]>;
   roomId: string;
 
   // Our constructor calls our wsService connect method
   constructor(private wsService: WebsocketService, private store: Store) {
-    this.initConnexion();
-
-    // Handle user connection
-    // this.wsService.socket.on('userConnected', user => {
-    //   this.users.subscribe(results => {
-    //     results.map(data => {
-    //       if (data.id === user.id) {
-    //         data.connected = true;
-    //       }
-    //     });
-    //   });
-    // });
+    this.joinRoom();
   }
 
-  initConnexion() {
-    this.users = this.store.select<User[]>('users');
+  /**
+   * Subscribes to incoming message
+   */
+  onMessage() {
+    return this.wsService.on('message');
+  }
+
+  /**
+   * Sends a message to a chatroom
+   * @param message The message to send
+   */
+  sendMessage(message, ) {
+    this.wsService.emit('message', { message, room: this.roomId });
+  }
+
+  /**
+   * Joins a room and retrieves room messages
+   * @param roomId The chatroom id to join
+   */
+  joinRoom(roomId?: string) {
     this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
-
-    this.messagesSubject = <Subject<any>>this.wsService
-      .connect(this.roomId).pipe(
-      map((response: any): any => {
-        // this.store.set('messages', response);
-        this.messages = [...response];
-        console.log(this.messages);
-
-        return response;
-      }));
+    console.log('join room', this.roomId);
+    this.wsService.emit('join', this.roomId);
   }
 
-  // Our simplified interface for sending
-  // messages back to our socket.io server
-  send(message) {
-    this.messagesSubject.next(message);
+  /**
+   * Leaves a room
+   * @param roomId The chatroom to leave
+   */
+  leaveRoom(roomId?: string) {
+    this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
+    console.log('leave room', this.roomId);
+    this.wsService.emit('leave', this.roomId);
   }
 }

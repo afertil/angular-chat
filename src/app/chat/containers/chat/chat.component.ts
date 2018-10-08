@@ -24,6 +24,7 @@ import { User } from '@app/auth/shared/services/auth.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   user: Observable<User>;
+  users: Observable<User[]>;
   messages: any[]; // TODO: create type message
   subscription: Subscription;
   loading = true;
@@ -40,6 +41,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Unsubscribe before changing room
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
+        this.chatService.leaveRoom();
         this.subscription.unsubscribe();
       }
     });
@@ -53,11 +55,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.messages = [];
     this.user = this.store.select<User>('user');
+    this.users = this.store.select<User[]>('users');
     if (this.subscription) {
-      this.chatService.initConnexion();
+      this.chatService.joinRoom();
     }
-    // this.messages = this.store.select<String[]>('messages');
-    this.subscription = this.chatService.messagesSubject.subscribe(message => {
+
+    this.subscription = this.chatService.onMessage().subscribe(message => {
+      console.log(message);
       this.messages = [...this.messages, ...message];
       this.loading = false;
     });
@@ -66,8 +70,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   sendMessage(message) {
     const date = Date.now();
     this.user.subscribe(user => {
-      console.log(user);
-      this.chatService.send({ message, user, date });
+      this.chatService.sendMessage({ message, user, date });
     });
   }
 }

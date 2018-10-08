@@ -7,10 +7,10 @@ import { User } from '@app/auth/shared/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['chat-item.component.scss'],
   template: `
-    <div class="chat-item" [ngClass]="{'right': user._id === item.user._id}">
-      <mat-icon *ngIf="user._id !== item.user._id">account_circle</mat-icon>
+    <div class="chat-item" [ngClass]="{'right': user._id === item.user}">
+      <mat-icon *ngIf="user._id !== item.user">account_circle</mat-icon>
       <mat-chip class="message">{{ item.message }}</mat-chip>
-      <mat-icon *ngIf="user._id === item.user._id">account_circle</mat-icon>
+      <mat-icon *ngIf="user._id === item.user">account_circle</mat-icon>
       <p class="date">{{ item.date | date:'HH:mm:ss' }}</p>
     </div>
   `,

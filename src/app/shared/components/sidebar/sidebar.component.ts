@@ -16,6 +16,7 @@ import {
   Room,
   RoomsService,
 } from '@app/rooms/shared/services/rooms.service';
+import { WebsocketService } from '@app/shared/websocket/websocket.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -81,6 +82,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
     private usersService: UsersService,
     private roomsService: RoomsService,
     private store: Store,
+    private wsService: WebsocketService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -88,7 +90,14 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    // TODO add to subscription to unsubscribe on component destruction
     this.usersService.getUsers().subscribe(users => {
+      users.map(data => {
+        if (data._id === this.user._id) {
+          data.connected = true;
+        }
+      });
+
       this.store.set('users', users);
       this.users = this.store.select<User[]>('users');
     });
@@ -99,6 +108,8 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.store.set('rooms', globalRooms);
       this.rooms = this.store.select<Room[]>('rooms');
     });
+
+    this.wsService.connect();
   }
 
   ngAfterViewChecked() {
