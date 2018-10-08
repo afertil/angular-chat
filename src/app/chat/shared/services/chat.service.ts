@@ -49,5 +49,6 @@ export class ChatService {
     this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
     console.log('leave room', this.roomId);
     this.wsService.emit('leave', this.roomId);
+    this.roomId = null;
   }
 }

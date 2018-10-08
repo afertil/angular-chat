@@ -34,6 +34,6 @@ export class RoomComponent {
   }
 
   goToRoom(id) {
-    this.router.navigate([`rooms/${id}`]);
+    this.router.navigate([`messages/${id}`]);
   }
 }

@@ -40,7 +40,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => this.subscribe());
     // Unsubscribe before changing room
     this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
+      if (event instanceof NavigationStart && this.chatService.roomId) {
         this.chatService.leaveRoom();
         this.subscription.unsubscribe();
       }
