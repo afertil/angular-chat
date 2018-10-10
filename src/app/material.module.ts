@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import {
   MatButtonModule,
@@ -16,7 +15,10 @@ import {
   MatSidenavModule,
   MatListModule,
   MatPaginatorModule,
-  MatChipsModule
+  MatChipsModule,
+  MatGridListModule,
+  MatCheckboxModule,
+  MatAutocompleteModule
 } from '@angular/material';
 
 const MODULES = [
@@ -34,11 +36,14 @@ const MODULES = [
   MatSidenavModule,
   MatListModule,
   MatPaginatorModule,
-  MatChipsModule
+  MatChipsModule,
+  MatGridListModule,
+  MatCheckboxModule,
+  MatAutocompleteModule
 ];
 
 @NgModule({
   imports: [...MODULES],
-  exports: [...MODULES],
+  exports: [...MODULES]
 })
 export class MaterialModule {}
