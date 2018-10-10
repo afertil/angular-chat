@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
-
-import { JwtHelperService } from '@auth0/angular-jwt';
-
 import { Observable } from 'rxjs';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { Store } from '@store';
 import { APP_CONFIG } from '@config';

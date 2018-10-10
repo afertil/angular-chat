@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,7 +18,7 @@ export class ChatService {
   /**
    * Subscribes to incoming message
    */
-  onMessage() {
+  onMessage(): Observable<any> {
     return this.wsService.on('message');
   }
 
@@ -27,7 +26,7 @@ export class ChatService {
    * Sends a message to a chatroom
    * @param message The message to send
    */
-  sendMessage(message, ) {
+  sendMessage(message): void {
     this.wsService.emit('message', { message, room: this.roomId });
   }
 
@@ -35,7 +34,7 @@ export class ChatService {
    * Joins a room and retrieves room messages
    * @param roomId The chatroom id to join
    */
-  joinRoom(roomId?: string) {
+  joinRoom(roomId?: string): void {
     this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
     console.log('join room', this.roomId);
     this.wsService.emit('join', this.roomId);
@@ -45,7 +44,7 @@ export class ChatService {
    * Leaves a room
    * @param roomId The chatroom to leave
    */
-  leaveRoom(roomId?: string) {
+  leaveRoom(roomId?: string): void {
     this.roomId = window.location.pathname.split('/')[2]; // TODO: Improve
     console.log('leave room', this.roomId);
     this.wsService.emit('leave', this.roomId);

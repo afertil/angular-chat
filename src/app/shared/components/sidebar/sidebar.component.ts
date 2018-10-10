@@ -4,7 +4,7 @@ import {
   OnInit,
   OnDestroy,
   Input,
-  AfterViewChecked,
+  AfterViewChecked
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { Observable } from 'rxjs';
 import { User, AuthService } from '@app/auth/shared/services/auth.service';
 import { Store } from '@store';
 import { UsersService } from '@app/shared/components/services/users.service';
-import {
-  Room,
-  RoomsService,
-} from '@app/rooms/shared/services/rooms.service';
+import { Room, RoomsService } from '@app/rooms/shared/services/rooms.service';
 import { WebsocketService } from '@app/shared/websocket/websocket.service';
 
 @Component({
@@ -63,7 +60,7 @@ import { WebsocketService } from '@app/shared/websocket/websocket.service';
       </mat-sidenav-content>
 
     </mat-sidenav-container>
-  `,
+  `
 })
 export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
   users: Observable<User[]>;
@@ -72,8 +69,10 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  @Input() user: User;
-  @Input() toggle: boolean;
+  @Input()
+  user: User;
+  @Input()
+  toggle: boolean;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -92,24 +91,21 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     // TODO add to subscription to unsubscribe on component destruction
     this.usersService.getUsers().subscribe(users => {
-      users.map(data => {
-        if (data._id === this.user._id) {
-          data.connected = true;
-        }
-      });
-
       this.store.set('users', users);
       this.users = this.store.select<User[]>('users');
     });
 
     this.roomsService.getRooms().subscribe(rooms => {
-      console.log(rooms);
       const globalRooms = rooms.filter(room => room.is_user === false);
       this.store.set('rooms', globalRooms);
       this.rooms = this.store.select<Room[]>('rooms');
     });
 
     this.wsService.connect();
+
+    this.wsService.on('users').subscribe(users => {
+      this.setUserConnexionState(users);
+    });
   }
 
   ngAfterViewChecked() {
@@ -120,8 +116,23 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  goToRoom(user: User) {
-    console.log(user);
+  /**
+   * Defines users state connexion
+   * @param users
+   */
+  setUserConnexionState(users) {
+    this.users.subscribe(allUsers => {
+      allUsers.map(user => {
+        const index = users.findIndex(
+          connectedUserId => user._id === connectedUserId
+        );
+
+        index > -1 ? (user.connected = true) : (user.connected = false);
+      });
+
+      // this.store.set('users', allUsers);
+      // this.users = this.store.select<User[]>('users');
+    });
   }
 
   /**

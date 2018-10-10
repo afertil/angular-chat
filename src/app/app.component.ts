@@ -1,13 +1,11 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { User, AuthService } from '@app/auth/shared/services/auth.service';
 import { LoggerService } from '@app/shared/logger/logger.service';
 import { APP_CONFIG } from '@config';
+import { WebsocketService } from '@app/shared/websocket/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +25,7 @@ import { APP_CONFIG } from '@config';
       </app-sidebar>
     </div>
     <router-outlet name="login"></router-outlet>
-  `,
+  `
 })
 export class AppComponent implements OnInit {
   user$: Observable<User>;
@@ -37,6 +35,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private loggerService: LoggerService,
+    private wsService: WebsocketService
   ) {}
 
   ngOnInit() {
@@ -53,6 +52,7 @@ export class AppComponent implements OnInit {
 
   onLogout() {
     this.authService.logoutUser();
+    this.wsService.disconnect();
     this.router.navigate(['/auth/login']);
     this.loggerService.success('Successfully disconnected');
   }
