@@ -13,11 +13,12 @@ import {
   Validators
 } from '@angular/forms';
 
-import { Room } from '@app/rooms/shared/services/rooms.service';
 import { Observable, Subscription } from 'rxjs';
+import { MatOption } from '@angular/material';
+
+import { Room } from '@app/rooms/shared/services/rooms.service';
 import { User } from '@app/auth/shared/services/auth.service';
 import { Store } from '@store';
-import { MatOption } from '@angular/material';
 
 @Component({
   selector: 'app-room-form',

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
@@ -21,9 +20,9 @@ import { ChatComponent } from '@app/chat/containers/chat/chat.component';
 export const ROUTES: Routes = [
   {
     path: ':roomId',
-    component: ChatComponent,
+    component: ChatComponent
     // resolve: { messages: MessagesResolver }
-  },
+  }
 ];
 
 @NgModule({
@@ -31,14 +30,14 @@ export const ROUTES: Routes = [
     CommonModule,
     RouterModule.forChild(ROUTES),
     MaterialModule,
-    PerfectScrollbarModule,
+    PerfectScrollbarModule
   ],
   declarations: [
     ChatComponent,
     ChatListComponent,
     ChatItemComponent,
-    ChatInputComponent,
+    ChatInputComponent
   ],
-  providers: [ChatService /* MessagesResolver */],
+  providers: [ChatService /* MessagesResolver */]
 })
 export class ChatModule {}

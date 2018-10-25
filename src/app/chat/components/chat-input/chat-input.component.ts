@@ -4,7 +4,6 @@ import {
   ElementRef,
   ViewChild,
   EventEmitter,
-  OnInit,
   AfterViewInit,
   ChangeDetectionStrategy
 } from '@angular/core';

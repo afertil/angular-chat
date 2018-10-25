@@ -1,11 +1,8 @@
-import { Observable } from 'rxjs';
 import { Component, Input, ViewChild, OnChanges, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 
-import {
-  User,
-  AuthService,
-} from '@app/auth/shared/services/auth.service';
+import { User, AuthService } from '@app/auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -27,13 +24,15 @@ import {
         </ng-template>
       </div>
     </perfect-scrollbar>
-  `,
+  `
 })
 export class ChatListComponent implements OnInit, OnChanges {
   @ViewChild(PerfectScrollbarComponent)
   componentScroll: PerfectScrollbarComponent;
-  @Input() messages;
-  @Input() loading;
+  @Input()
+  messages;
+  @Input()
+  loading;
 
   user$: Observable<User>;
 
