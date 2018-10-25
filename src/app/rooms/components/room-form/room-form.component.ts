@@ -1,19 +1,27 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy
+} from '@angular/core';
 import {
   FormBuilder,
   FormArray,
-  FormGroup,
   FormControl,
   Validators
 } from '@angular/forms';
 
 import { Room } from '@app/rooms/shared/services/rooms.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User } from '@app/auth/shared/services/auth.service';
 import { Store } from '@store';
+import { MatOption } from '@angular/material';
 
 @Component({
   selector: 'app-room-form',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['room-form.component.scss'],
   template: `
     <div class="room-form">
@@ -44,26 +52,37 @@ import { Store } from '@store';
 
             <mat-checkbox formControlName="is_private">Private room</mat-checkbox>
 
-            <div class="room-form__user">
+            <div class="room-form__user" *ngIf="isPrivateRoom">
               <div class="room-form__subtitle">
                 <h3>Users</h3>
-                <button mat-raised-button color="primary" *ngIf="true" (click)="addUser()">
+
+                <input matInput
+                  placeholder="Enter user name"
+                  (input)="onSearchChange($event.target.value)"
+                  [matAutocomplete]="auto"
+                  [value]="autocompleteUser">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser" (optionSelected)="onUserSelect($event.option)">
+                  <mat-option *ngFor="let user of filteredUsers" [value]="user">
+                    {{ user.username }}
+                  </mat-option>
+                </mat-autocomplete>
+
+                <button mat-raised-button color="primary" [disabled]="userSelected === null" (click)="addUser(userSelected)">
                   <mat-icon>add</mat-icon> Add user
                 </button>
-              </div>
 
-              <div formArrayName="users">
-                <mat-form-field *ngFor="let c of users.controls; index as i;">
-                  <input matInput [formControlName]="i" placeholder="Enter user email" [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let user of users$ | async" [value]="user.email">
-                      {{ user.username }}
-                    </mat-option>
-                  </mat-autocomplete>
-                  <button mat-icon-button color="primary" class="room-form__remove" (click)="removeUser(i)">
-                    <mat-icon>clear</mat-icon>
-                  </button>
-                </mat-form-field>
+                <div>
+                  <mat-list *ngFor="let user of users.controls; index as i; trackBy: trackByFn">
+                    <mat-list-item *ngIf="user.value">
+                      {{ user.value.username }}
+                      <button mat-icon-button color="primary" class="room-form__remove" (click)="removeUser(i)">
+                        <mat-icon>clear</mat-icon>
+                      </button>
+                      <mat-divider></mat-divider>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+
               </div>
             </div>
 
@@ -77,8 +96,13 @@ import { Store } from '@store';
     </div>
   `
 })
-export class RoomFormComponent implements OnInit {
+export class RoomFormComponent implements OnInit, OnDestroy {
   users$: Observable<User[]>;
+  allUsers: User[];
+  userSelected: User = null;
+  filteredUsers: User[];
+  autocompleteUser = '';
+  subscription: Subscription;
 
   @Output()
   create = new EventEmitter<Room>();
@@ -87,14 +111,39 @@ export class RoomFormComponent implements OnInit {
     name: ['', Validators.required],
     description: [''],
     is_private: [''],
-    users: this.fb.array([''])
+    users: this.fb.array([])
   });
 
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit() {
     this.users$ = this.store.select<User[]>('users');
-    this.users$.subscribe(users => console.log(users));
+    this.subscription = this.users$.subscribe(users => {});
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  /**
+   * Filters users throw autocomplete
+   * @param value The current search of autocomple
+   * @return The list of filtred users
+   */
+  private _filterUsers(value: string): User[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allUsers.filter(
+      user => user.username.toLowerCase().indexOf(filterValue) === 0
+    );
+  }
+
+  /**
+   * Filter user in autocomplete field
+   * @param searchValue
+   */
+  onSearchChange(searchValue: string) {
+    this.filteredUsers = this._filterUsers(searchValue);
   }
 
   required(field) {
@@ -116,11 +165,18 @@ export class RoomFormComponent implements OnInit {
     return this.form.get('users') as FormArray;
   }
 
+  get isPrivateRoom() {
+    return !!this.form.get('is_private').value;
+  }
+
   /**
    * Adds a user to the private room
+   * @param user The user to add to the private room
    */
-  addUser() {
-    this.users.push(new FormControl(''));
+  addUser(user) {
+    this.users.push(new FormControl(user));
+    this.userSelected = null;
+    this.autocompleteUser = null;
   }
 
   /**
@@ -129,5 +185,25 @@ export class RoomFormComponent implements OnInit {
    */
   removeUser(index: number) {
     this.users.removeAt(index);
+  }
+
+  /**
+   * Defines the selected user to add to the private room
+   * @param option The selected option from the autocomplete
+   */
+  onUserSelect(option: MatOption) {
+    this.userSelected = option.value;
+  }
+
+  /**
+   * Displays the username of the selected user
+   * @param user The selected user in the autocomplete
+   */
+  displayUser(user): string {
+    return user ? user.username : '';
+  }
+
+  trackByFn(index) {
+    return index;
   }
 }
